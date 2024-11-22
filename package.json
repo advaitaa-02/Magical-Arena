@@ -1,0 +1,22 @@
+{
+  "name": "magical_arena",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/advaitaa-02/Magical-Arena.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/advaitaa-02/Magical-Arena/issues"
+  },
+  "homepage": "https://github.com/advaitaa-02/Magical-Arena#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
