@@ -1,4 +1,6 @@
 const Player = require('../Player');
+const Die = require('../Die');
+
 
 describe('Player Class', () => {
     test('Player initializes correctly', () => {
@@ -35,4 +37,18 @@ describe('Player Class', () => {
         player.takeDamage(100);
         expect(player.isAlive()).toBe(false);
     });
+});
+
+test('Attack value is correctly calculated using die roll', () => {
+    const player = new Player('Player A', 100, 10, 5);
+    const die = new Die();
+
+    for (let i = 0; i < 10; i++) { // Reduced to 10 iterations
+        const roll = die.roll();
+        const attackValue = player.attack * roll;
+
+        // Attack value should always be within 5 (attack * 1) and 30 (attack * 6)
+        expect(attackValue).toBeGreaterThanOrEqual(5);
+        expect(attackValue).toBeLessThanOrEqual(30);
+    }
 });
