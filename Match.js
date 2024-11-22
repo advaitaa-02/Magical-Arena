@@ -9,7 +9,10 @@ class Match {
 
     start() {
         while (this.player1.isAlive() && this.player2.isAlive()) {
-            const attacker = this.player1.health < this.player2.health ? this.player1 : this.player2;
+            // Randomize attacker if health is equal, otherwise choose based on health
+            const attacker = this.player1.health === this.player2.health
+                ? (Math.random() < 0.5 ? this.player1 : this.player2)
+                : (this.player1.health < this.player2.health ? this.player1 : this.player2);
             const defender = attacker === this.player1 ? this.player2 : this.player1;
 
             this.fightRound(attacker, defender);
