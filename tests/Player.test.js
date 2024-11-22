@@ -3,6 +3,34 @@ const Die = require('../Die');
 
 
 describe('Player Class', () => {
+    test('Throws error for invalid name', () => {
+        expect(() => new Player('', 100, 10, 5)).toThrow('Invalid name: Name must be a non-empty string.');
+        expect(() => new Player(null, 100, 10, 5)).toThrow('Invalid name: Name must be a non-empty string.');
+        expect(() => new Player(123, 100, 10, 5)).toThrow('Invalid name: Name must be a non-empty string.');
+    });
+
+    test('Throws error for non-positive health', () => {
+        expect(() => new Player('Player A', -50, 10, 5)).toThrow('Invalid health: Health must be a positive number.');
+    });
+
+    test('Throws error for non-positive strength', () => {
+        expect(() => new Player('Player A', 100, -10, 5)).toThrow('Invalid strength: Strength must be a positive number.');
+        expect(() => new Player('Player A', 100, 0, 5)).toThrow('Invalid strength: Strength must be a positive number.');
+    });
+
+    test('Throws error for non-positive attack', () => {
+        expect(() => new Player('Player A', 100, 10, -5)).toThrow('Invalid attack: Attack must be a positive number.');
+        expect(() => new Player('Player A', 100, 10, 0)).toThrow('Invalid attack: Attack must be a positive number.');
+    });
+
+    test('Accepts valid inputs', () => {
+        const player = new Player('Player A', 100, 10, 5);
+        expect(player.name).toBe('Player A');
+        expect(player.health).toBe(100);
+        expect(player.strength).toBe(10);
+        expect(player.attack).toBe(5);
+    });
+
     test('Player initializes correctly', () => {
         const player = new Player('Player A', 100, 10, 5);
 

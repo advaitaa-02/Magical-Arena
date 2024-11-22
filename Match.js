@@ -8,6 +8,11 @@ class Match {
     }
 
     start() {
+        if (!this.player1.isAlive() && !this.player2.isAlive()) {
+            console.log("It's a draw! Both players are dead.");
+            return;
+        }
+    
         while (this.player1.isAlive() && this.player2.isAlive()) {
             // Randomize attacker if health is equal, otherwise choose based on health
             const attacker = this.player1.health === this.player2.health
