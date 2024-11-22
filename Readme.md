@@ -50,3 +50,5 @@ If both players have equal health, the first attacker is chosen randomly.(**assu
 **Winning the Game**:  
 The game ends when one player's health reaches zero.  
 If both players' health reaches zero simultaneously , the game is declared a draw.  
+
+In index.js, you can change the values of strength,attack and health for both players.
