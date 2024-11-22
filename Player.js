@@ -8,11 +8,11 @@ class Player {
             throw new Error('Invalid health: Health must be a positive number.');
         }
 
-        if (typeof strength !== 'number' || strength <= 0) {
+        if (typeof strength !== 'number' || strength < 0) {
             throw new Error('Invalid strength: Strength must be a positive number.');
         }
 
-        if (typeof attack !== 'number' || attack <= 0) {
+        if (typeof attack !== 'number' || attack < 0) {
             throw new Error('Invalid attack: Attack must be a positive number.');
         }
 

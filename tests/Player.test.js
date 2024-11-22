@@ -15,12 +15,10 @@ describe('Player Class', () => {
 
     test('Throws error for non-positive strength', () => {
         expect(() => new Player('Player A', 100, -10, 5)).toThrow('Invalid strength: Strength must be a positive number.');
-        expect(() => new Player('Player A', 100, 0, 5)).toThrow('Invalid strength: Strength must be a positive number.');
     });
 
     test('Throws error for non-positive attack', () => {
         expect(() => new Player('Player A', 100, 10, -5)).toThrow('Invalid attack: Attack must be a positive number.');
-        expect(() => new Player('Player A', 100, 10, 0)).toThrow('Invalid attack: Attack must be a positive number.');
     });
 
     test('Accepts valid inputs', () => {

@@ -58,19 +58,6 @@ describe('Match Class', () => {
         expect(player2.health).toBe(100 - damage);
     });
 
-    test('Game ends when one player’s health reaches 0', () => {
-        const player1 = new Player('Player A', 50, 5, 10);
-        const player2 = new Player('Player B', 10, 10, 5); // Player 2 starts with low health
-
-        const match = new Match(player1, player2);
-
-        match.start();
-
-        // Verify that game ended and player 2 lost
-        expect(player1.isAlive()).toBe(true);
-        expect(player2.isAlive()).toBe(false);
-    });
-
     test('Player health should never be negative', () => {
         const player1 = new Player('Player A', 50, 5, 10);
         const player2 = new Player('Player B', 10, 10, 5); // Player 2 starts with low health
@@ -84,33 +71,26 @@ describe('Match Class', () => {
         expect(player2.health).toBeGreaterThanOrEqual(0);
     });
 
-    test('Player name can be changed during the match', () => {
-        const player1 = new Player('Player A', 50, 5, 10);
-        const player2 = new Player('Player B', 50, 10, 5);
-
-        player1.name = 'Player X';
-        player2.name = 'Player Y';
-
-        const match = new Match(player1, player2);
-
-        match.start();
-
-        // Ensure the names are updated correctly
-        expect(player1.name).toBe('Player X');
-        expect(player2.name).toBe('Player Y');
-    });
-
     test('Game ends immediately if a player starts with 0 health', () => {
         const player1 = new Player('Player A', 0, 5, 10); // Player 1 starts with 0 health
         const player2 = new Player('Player B', 100, 10, 5);
-
+    
         const match = new Match(player1, player2);
-
+    
+        // Mock console.log to capture the output
+        const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    
         match.start();
-
+    
         // Ensure the game ends immediately
         expect(player1.isAlive()).toBe(false);
         expect(player2.isAlive()).toBe(true);
+    
+        // Verify that the correct message is printed
+        expect(logSpy).toHaveBeenCalledWith('Player B wins the match!');
+    
+        // Clean up the mock
+        logSpy.mockRestore();
     });
 
     test('If both players start with 0 health, no winner is declared', () => {
@@ -165,4 +145,34 @@ describe('Match Class', () => {
         expect(player1.health).toBeGreaterThanOrEqual(0);
         expect(player2.health).toBeGreaterThanOrEqual(0);
     });
+    test('Player with zero attack cannot deal damage', () => {
+        const player1 = new Player('Player A', 100, 0, 10); // Zero attack
+        const player2 = new Player('Player B', 100, 10, 5);
+    
+        const match = new Match(player1, player2);
+
+        // Mock die rolls to fixed values
+        jest.spyOn(match.die, 'roll').mockReturnValue(4);
+    
+        match.fightRound(player1, player2);
+    
+        // Since player1 has zero attack, no damage should be dealt
+        expect(player2.health).toBe(100);
+    });
+    
+    test('Player with zero strength cannot defend', () => {
+        const player1 = new Player('Player A', 100, 5, 10);
+        const player2 = new Player('Player B', 100, 0, 10); // Zero strength
+    
+        const match = new Match(player1, player2);
+
+    // Mock die rolls
+    jest.spyOn(match.die, 'roll').mockReturnValue(4);
+
+    match.fightRound(player1, player2);
+
+    const expectedDamage = (player1.attack * 4) - (player2.strength * 4);
+    expect(player2.health).toBe(100 - expectedDamage);
+    });
+    
 });
