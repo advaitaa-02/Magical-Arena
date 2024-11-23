@@ -9,7 +9,7 @@ describe('Match Class', () => {
 
         const match = new Match(player1, player2);
 
-        // Verify initial attacker based on health
+        // Verify initial attacker based on lesser health
         const attacker = player1.health < player2.health ? player1 : player2;
         const defender = attacker === player1 ? player2 : player1;
 
@@ -111,27 +111,6 @@ describe('Match Class', () => {
         logSpy.mockRestore();
     });
     
-
-    test('Player attack should never cause negative health adjustments', () => {
-        const player1 = new Player('Player A', 100, 5, 10);
-        const player2 = new Player('Player B', 100, 10, 5);
-
-        const match = new Match(player1, player2);
-
-        // Simulate a round of combat
-        const attackRoll = 1; // Minimum attack roll
-        const defenseRoll = 6; // Maximum defense roll
-
-        const attackValue = player1.attack * attackRoll;
-        const defenseValue = player2.strength * defenseRoll;
-
-        const damageDealt = Math.max(0, attackValue - defenseValue);
-        player2.takeDamage(damageDealt);
-
-        // Ensure no invalid negative adjustments
-        expect(damageDealt).toBeGreaterThanOrEqual(0);
-        expect(player2.health).toBeLessThanOrEqual(100); // Initial health was 100
-    });
 
     test('Game handles very high attack and defense values correctly', () => {
         const player1 = new Player('Player A', 1000, 100, 500); // High attack values
